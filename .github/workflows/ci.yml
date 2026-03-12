@@ -2,7 +2,7 @@ name: Deploy Django Project
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "feature/1" ]
   pull_request:
     branches: [ "main", "dev" ]
 
