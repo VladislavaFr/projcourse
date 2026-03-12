@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import environ
 from celery.schedules import crontab
 
 load_dotenv(override=True)
@@ -121,12 +120,10 @@ REST_FRAMEWORK = {
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_API_VERSION = os.getenv("STRIPE_API_VERSION")
 
-env = environ.Env()
-environ.Env.read_env()
 
-REDIS_HOST = env('REDIS_HOST')
-REDIS_PORT = env('REDIS_PORT')
-REDIS_DB = env('REDIS_DB')
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_DB = os.getenv('REDIS_DB')
 
 CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
