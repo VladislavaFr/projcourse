@@ -63,12 +63,12 @@ jobs:
 
       - name: Run migrations
         env:
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-          DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_NAME: base_one
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: 12345
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
+          SECRET_KEY: qwrev
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_API_VERSION: ${{ secrets.STRIPE_API_VERSION }}
           REDIS_HOST: localhost
