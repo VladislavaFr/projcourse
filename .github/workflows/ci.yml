@@ -92,7 +92,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             mkdir -p /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1
-            cd /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1
+            cd /home/${{ secrets.SERVER_USER }}/projcourse
             cat << 'EOF' > .env
             SECRET_KEY=${{ secrets.SECRET_KEY }}
             DATABASE_NAME=${{ secrets.DATABASE_NAME }}
