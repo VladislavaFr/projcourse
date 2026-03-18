@@ -1,10 +1,18 @@
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from django.urls import path, include
+from .views import BuyCourseView
 
-from lms.views import CourseViewSet, LessonViewSet  # предполагаю что они у тебя есть
+from .views import (CourseSubscriptionAPIView, CourseViewSet,
+                    LessonListCreateAPIView,
+                    LessonRetrieveUpdateDestroyAPIView)
 
 router = DefaultRouter()
 router.register(r'courses', CourseViewSet, basename='course')
-router.register(r'lessons', LessonViewSet, basename='lesson')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('', include(router.urls)),
+    path('lessons/', LessonListCreateAPIView.as_view(), name='lesson-list-create'),
+    path('lessons/<int:pk>/', LessonRetrieveUpdateDestroyAPIView.as_view(), name='lesson-detail'),
+    path('subscriptions/subscribe/', CourseSubscriptionAPIView.as_view(), name='course-subscribe'),
+    path('courses/<int:pk>/buy/', BuyCourseView.as_view(), name='course-buy'),
+]
