@@ -99,7 +99,7 @@ class SubscriptionTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(email='user@example.com', password='pass')
-        self.course = Course.objects.create(title='Sub Course', description='...', owner=self.user)
+        self.course = Course.objects.create(title='Sub Course', description='...', owner=self.user, price=100)
         self.subscribe_url = reverse('course-subscribe')
 
     def test_subscribe_to_course(self):

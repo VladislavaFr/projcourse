@@ -15,7 +15,7 @@ class Course(models.Model):
 
     stripe_price_id = models.CharField(max_length=255, blank=True, null=True)
     stripe_product_id = models.CharField(max_length=255, blank=True, null=True)
-    price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Цена')
+    price = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Цена', blank=True, null=True)
 
     def __str__(self):
         return self.title
