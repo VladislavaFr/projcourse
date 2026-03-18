@@ -15,13 +15,14 @@ class LessonCRUDTestCase(APITestCase):
         self.moderator = User.objects.create_user(email='moderator@example.com', password='pass')
         self.moderator.groups.add(Group.objects.get_or_create(name='Модераторы')[0])
 
-        self.course = Course.objects.create(title='Test Course', description='Course description', owner=self.owner)
+        self.course = Course.objects.create(title='Test Course', description='Course description', owner=self.owner, price=100)
         self.lesson = Lesson.objects.create(
             course=self.course,
             title='Test Lesson',
             description='Lesson description',
             video_url='https://youtube.com/watch?v=abc123',
-            owner=self.owner
+            owner=self.owner,
+            price=100,
         )
         self.lesson_url = reverse('lesson-detail', kwargs={'pk': self.lesson.pk})
         self.lesson_list_url = reverse('lesson-list-create')
