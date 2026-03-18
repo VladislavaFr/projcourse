@@ -61,7 +61,7 @@ jobs:
             sleep 3
           done
 
-      - name: Run migrations
+      - name: Run migrations n tests
         env:
           DATABASE_NAME: base_one
           DATABASE_USER: postgres
@@ -75,7 +75,9 @@ jobs:
           REDIS_PORT: 6379
           REDIS_DB: 0
           DEBUG: True
-        run: python manage.py migrate
+        run: | 
+          python manage.py migrate
+          python manage.py test
 
   deploy:
     runs-on: ubuntu-latest
