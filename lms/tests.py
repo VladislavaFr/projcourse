@@ -22,7 +22,6 @@ class LessonCRUDTestCase(APITestCase):
             description='Lesson description',
             video_url='https://youtube.com/watch?v=abc123',
             owner=self.owner,
-            price=100,
         )
         self.lesson_url = reverse('lesson-detail', kwargs={'pk': self.lesson.pk})
         self.lesson_list_url = reverse('lesson-list-create')
