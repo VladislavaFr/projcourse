@@ -2,7 +2,7 @@ name: Deploy Django Project
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "feature/1" ]
   pull_request:
     branches: [ "main", "dev" ]
 
@@ -56,26 +56,28 @@ jobs:
 
       - name: Wait for Redis
         run: |
-          until docker run --rm redis:7 redis-cli -h localhost ping | grep PONG; do
+          until docker exec $(docker ps -q -f ancestor=redis:7) redis-cli ping | grep PONG; do
             echo "Waiting for Redis..."
             sleep 3
           done
 
-      - name: Run migrations
+      - name: Run migrations n tests
         env:
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-          DATABASE_USER: ${{ secrets.DATABASE_USER }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_NAME: base_one
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: 12345
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
+          SECRET_KEY: qwrev
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_API_VERSION: ${{ secrets.STRIPE_API_VERSION }}
           REDIS_HOST: localhost
           REDIS_PORT: 6379
           REDIS_DB: 0
           DEBUG: True
-        run: python manage.py migrate
+        run: | 
+          python manage.py migrate
+          python manage.py test
 
   deploy:
     runs-on: ubuntu-latest
@@ -92,7 +94,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             mkdir -p /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1
-            cd /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1
+            cd /home/${{ secrets.SERVER_USER }}/projcourse
             cat << 'EOF' > .env
             SECRET_KEY=${{ secrets.SECRET_KEY }}
             DATABASE_NAME=${{ secrets.DATABASE_NAME }}
